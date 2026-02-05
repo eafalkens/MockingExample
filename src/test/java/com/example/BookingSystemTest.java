@@ -199,4 +199,22 @@ public class BookingSystemTest {
 
         assertThat(result).containsExactly(availableRoom);
     }
+
+    @Test void cancelBookingShouldThrowExceptionWhenBookingIdIsNull() {
+        String bookingId = null;
+
+        assertThatThrownBy(() ->
+                bookingSystem.cancelBooking(bookingId)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test void cancelBookingShouldReturnFalseWhenBookingIsNotFound() {
+        String bookingId = "1";
+
+        when(roomRepository.findAll())
+                .thenReturn(List.of());
+
+        boolean result = bookingSystem.cancelBooking(bookingId);
+        assertThat(result).isFalse();
+    }
 }
