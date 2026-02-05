@@ -9,9 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -152,5 +153,50 @@ public class BookingSystemTest {
         boolean result = bookingSystem.bookRoom(roomId, startTime, endTime);
 
         assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource ("nullTimeParameters")
+    void getAvailableRoomsShouldThrowExceptionWhenAnyTimeParameterIsNull(
+        LocalDateTime startTime,
+        LocalDateTime endTime
+    ) {
+        assertThatThrownBy(() ->
+                bookingSystem.getAvailableRooms(startTime, endTime)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+    static Stream<Arguments> nullTimeParameters() {
+        LocalDateTime now = LocalDateTime.of(2026, 1, 1, 0, 0);
+        return Stream.of(
+                Arguments.of(null, now.plusHours(1)),
+                Arguments.of(now, null)
+        );
+    }
+
+    @Test
+    void getAvailableRoomsShouldThrowExceptionWhenEndTimeIsBeforeStartTime() {
+        LocalDateTime startTime = LocalDateTime.of(2026, 1, 1, 0, 0);
+        LocalDateTime endTime = startTime.minusHours(1);
+
+        assertThatThrownBy(() ->
+                bookingSystem.getAvailableRooms(startTime, endTime)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void getAvailableRoomsShouldReturnOnlyAvailableRooms() {
+        LocalDateTime startTime = LocalDateTime.of(2026, 1, 1, 0, 0);
+        LocalDateTime endTime = startTime.plusHours(1);
+
+        Room availableRoom = new Room("1", "Room A");
+        Room bookedRoom = new Room("2", "Room B");
+        Booking booking = new Booking("b1", "2", startTime, endTime);
+        bookedRoom.addBooking(booking);
+
+        List<Room> rooms = List.of(availableRoom, bookedRoom);
+        when(roomRepository.findAll()).thenReturn(rooms);
+        List<Room> result = bookingSystem.getAvailableRooms(startTime, endTime);
+
+        assertThat(result).containsExactly(availableRoom);
     }
 }
