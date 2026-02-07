@@ -2,7 +2,6 @@ package com.example;
 
 import com.example.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,7 +27,7 @@ public class ShoppingCartTest {
 
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.addItem(item, price, quantity);
-        shoppingCart.removeItem(item, price, quantity);
+        shoppingCart.removeItem(item);
 
         assertTrue(shoppingCart.isEmpty());
     }
@@ -51,9 +50,16 @@ public class ShoppingCartTest {
         assertEquals(5.00, shoppingCart.getTotalPrice(), 0.01);
     }
 
+    @Test
+    void shouldUpdateQuantity() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.addItem("Umbrella", 5.00, 1);
+        shoppingCart.updateQuantity("Umbrella", 4);
+
+        assertEquals(20.00, shoppingCart.getTotalPrice(), 0.01);
+    }
+
 }
-//shouldIncreaseQuantityWhenAddingSameItem
-//shouldUpdateQuantity
 
 //Steg 8: Bestäm kantfall (edge cases)
 //Du ska ha tester för:
