@@ -33,10 +33,18 @@ public class ShoppingCartTest {
         assertTrue(shoppingCart.isEmpty());
     }
 
+    @Test
+    void shouldCalculateTotalPrice() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.addItem("Umbrella", 2.99, 1);
+        shoppingCart.addItem("Apple", 1, 3);
+
+        assertEquals(5.99, shoppingCart.getTotalPrice(), 0.01);
+    }
+
 
 }
 //shouldIncreaseQuantityWhenAddingSameItem
-//shouldCalculateTotalPrice
 //shouldApplyDiscount
 //shouldUpdateQuantity
 
