@@ -4,6 +4,7 @@ import com.example.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShoppingCartTest {
 
@@ -19,10 +20,22 @@ public class ShoppingCartTest {
         assertEquals(2.99, shoppingCart.getTotalPrice(), 0.01);
     }
 
+    @Test
+    void shouldRemoveItem() {
+        String item = "Umbrella";
+        double price = 2.99;
+        int quantity = 1;
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.addItem(item, price, quantity);
+        shoppingCart.removeItem(item, price, quantity);
+
+        assertTrue(shoppingCart.isEmpty());
+    }
+
+
 }
-//Testmetoder?:
 //shouldIncreaseQuantityWhenAddingSameItem
-//shouldRemoveItem
 //shouldCalculateTotalPrice
 //shouldApplyDiscount
 //shouldUpdateQuantity
