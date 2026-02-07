@@ -10,4 +10,11 @@ public class ShoppingCart {
     public double getTotalPrice() {
         return totalPrice;
     }
+
+    public void removeItem(String item, double price, int quantity) {
+        totalPrice -= price * quantity;
+    }
+    public boolean isEmpty() {
+        return true;
+    }
 }
