@@ -20,4 +20,8 @@ public class ShoppingCart {
     public boolean isEmpty() {
         return itemCount == 0;
     }
+
+    public void applyDiscount(double percentage) {
+        totalPrice = totalPrice * (1 - percentage / 100);
+    }
 }
