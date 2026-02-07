@@ -42,10 +42,17 @@ public class ShoppingCartTest {
         assertEquals(5.99, shoppingCart.getTotalPrice(), 0.01);
     }
 
+    @Test
+    void shouldApplyDiscount() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.addItem("Umbrella", 10.00, 1);
+        shoppingCart.applyDiscount(50);
+
+        assertEquals(5.00, shoppingCart.getTotalPrice(), 0.01);
+    }
 
 }
 //shouldIncreaseQuantityWhenAddingSameItem
-//shouldApplyDiscount
 //shouldUpdateQuantity
 
 //Steg 8: Bestäm kantfall (edge cases)
@@ -55,9 +62,3 @@ public class ShoppingCartTest {
 //negativ quantity
 //rabatt över 100%
 //tom kundvagn totalpris
-
-//TDD-regel att minnas
-//1. Skriv test (rött)
-//2. Skriv minimal kod (grönt)
-//3. Refaktorera
-//4. Commit
