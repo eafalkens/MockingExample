@@ -88,9 +88,17 @@ public class ShoppingCartTest {
                 shoppingCart.removeItem("Banana")
         ).doesNotThrowAnyException();
     }
+
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenDiscountIsOver100() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        assertThatThrownBy(() ->
+                shoppingCart.applyDiscount(150)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
 
 //Steg 8: Bestäm kantfall (edge cases)
-//ta bort item som inte finns
 //rabatt över 100%
 //tom kundvagn totalpris

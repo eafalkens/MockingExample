@@ -42,6 +42,9 @@ public class ShoppingCart {
     }
 
     public void applyDiscount(double percentage) {
+        if (percentage > 100) {
+            throw new IllegalArgumentException("Discount can not be over 100");
+        }
         for (Item item : items) {
             item.price *= (1 - percentage / 100);
         }
