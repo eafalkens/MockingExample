@@ -69,11 +69,18 @@ public class ShoppingCartTest {
                 shoppingCart.addItem("Pear", 2, 0)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenQuantityIsNegative() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        assertThatThrownBy(() ->
+                shoppingCart.addItem("Pear", 2, -1)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
 
 //Steg 8: Bestäm kantfall (edge cases)
-//Du ska ha tester för:
-//lägga till item med quantity = 0
 //ta bort item som inte finns
 //negativ quantity
 //rabatt över 100%
