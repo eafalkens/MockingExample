@@ -19,6 +19,9 @@ public class ShoppingCart {
     }
 
     public void addItem(String name, double price, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than zero");
+        }
         items.add(new Item(name, price, quantity));
     }
 

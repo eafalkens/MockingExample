@@ -2,6 +2,8 @@ package com.example;
 
 import com.example.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -59,6 +61,14 @@ public class ShoppingCartTest {
         assertEquals(20.00, shoppingCart.getTotalPrice(), 0.01);
     }
 
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenQuantityIsZero() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        assertThatThrownBy(() ->
+                shoppingCart.addItem("Pear", 2, 0)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
 
 //Steg 8: Bestäm kantfall (edge cases)
