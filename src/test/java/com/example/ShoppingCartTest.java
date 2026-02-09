@@ -3,8 +3,7 @@ package com.example;
 import com.example.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -97,8 +96,11 @@ public class ShoppingCartTest {
                 shoppingCart.applyDiscount(150)
         ).isInstanceOf(IllegalArgumentException.class);
     }
-}
 
-//Steg 8: Bestäm kantfall (edge cases)
-//rabatt över 100%
-//tom kundvagn totalpris
+    @Test
+    void emptyCartShouldHaveTotalPriceZero() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        assertThat(shoppingCart.getTotalPrice()).isEqualTo(0);
+    }
+}
